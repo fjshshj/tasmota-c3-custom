@@ -1,0 +1,37 @@
+name: Build Tasmota ESP32-C3
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+
+      - name: Install PlatformIO
+        run: pip install platformio
+
+      - name: Clone Tasmota
+        run: git clone --depth=1 https://github.com/arendst/Tasmota.git tasmota
+
+      - name: Copy custom configs
+        run: |
+          cp -f ./tasmota-c3.h ./tasmota/tasmota/user_config_override.h
+
+      - name: Build Tasmota
+        run: |
+          cd tasmota
+          platformio run -e tasmota32c3
+
+      - name: Upload firmware
+        uses: actions/upload-artifact@v2
+        with:
+          name: Tasmota-ESP32-C3-Custom
+          path: tasmota/.pio/build/tasmota32c3/firmware.bin

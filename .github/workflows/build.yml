@@ -31,7 +31,7 @@ jobs:
           platformio run -e tasmota32c3
 
       - name: Upload firmware
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: Tasmota-ESP32-C3-Custom
           path: tasmota/.pio/build/tasmota32c3/firmware.bin

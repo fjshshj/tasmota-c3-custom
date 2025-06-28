@@ -20,6 +20,11 @@ jobs:
 
       - name: Clone Tasmota
         run: git clone --depth=1 https://github.com/arendst/Tasmota.git tasmota
+        
+      - name: Install NimBLE-Arduino
+        run: |
+          mkdir -p tasmota/lib/NimBLE-Arduino
+          git clone https://github.com/h2zero/NimBLE-Arduino.git tasmota/lib/NimBLE-Arduino
 
       - name: Copy custom configs
         run: |

@@ -18,17 +18,12 @@ jobs:
       - name: Install PlatformIO
         run: pip install platformio
 
-      - name: Clone Tasmota
-        run: git clone --depth=1 https://github.com/arendst/Tasmota.git tasmota
-        
-      - name: Install NimBLE-Arduino
+      - name: Clone Tasmota (with submodules)
         run: |
-          mkdir -p tasmota/lib/NimBLE-Arduino
-          git clone https://github.com/h2zero/NimBLE-Arduino.git tasmota/lib/NimBLE-Arduino
+          git clone --recurse-submodules --depth=1 https://github.com/arendst/Tasmota.git tasmota
 
-      - name: Copy custom configs
-        run: |
-          cp -f ./tasmota-c3.h ./tasmota/tasmota/user_config_override.h
+      - name: Copy custom config
+        run: cp ./tasmota-c3.h ./tasmota/tasmota/user_config_override.h
 
       - name: Build Tasmota
         run: |
